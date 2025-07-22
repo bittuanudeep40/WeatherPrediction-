@@ -20,6 +20,7 @@ def get_current_weather(city):
     data = response.json()
     return {
         'city': data['name'],
+        
         'current_temp': round(data['main']['temp']),
         'feels_like': round(data['main']['feels_like']),
         'temp_min': round(data['main']['temp_min']),
@@ -87,7 +88,14 @@ def weather_view(request):
         
         
         current_weather = get_current_weather(city)
-        csv_path = os.path.join('C:\\Users\\ANUDEEP\\Desktop\\velvetrides\\weather prediction\\weatherProject\\weather.csv')
+        
+        csv_path = os.path.join('C:\\Users\\ANUDEEP\\Desktop\\velvetrides\\weather_prediction\\weatherProject')
+        csv_path = os.path.join('C:/Users/ANUDEEP/Desktop/velvetrides/weather_prediction/weatherProject',
+'weather.csv'  
+)
+
+        
+
         historical_data = read_historical_data(csv_path)
         X, y, le = prepare_data(historical_data)
         rain_model = train_rain_model(X, y)

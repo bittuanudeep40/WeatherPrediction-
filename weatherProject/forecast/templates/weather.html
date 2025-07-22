@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
     <link rel="icon" href="{% static 'img/site-pic.ico' %}" type="image/x-icon"/>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
 
@@ -15,7 +14,7 @@
 <body>
     <main class="{{ description }}">
         <section class="side-container">
-            <form method="POST"> 
+            <form id="searchForm" method="POST"> 
                 {% csrf_token %}
                 <div class="search-container">
                     <div style="width: 22px; height: 22px; color: white;" class="weath-icon">
@@ -23,12 +22,13 @@
                     </div>
                     <input
                         type="text"
+                        id="cityInput"
                         name="city"
                         class="geo-input"
                         placeholder="ex. India, England"
                         value="{{ location }}"
                     />
-                    <button class="search-button">
+                    <button type="submit" class="search-button">
                         <div style="width: 25px; height: 25px; color: white;">
                             <i class="bi bi-search"></i>
                         </div>
@@ -41,7 +41,7 @@
                     <span class="day-stats__temperature_value">{{ current_temp }}</span>°
                 </h2>
                 <h3 class="day-stats__feelslike">
-                    Feels like:&nbsp&nbsp <span class="day-stats__feelslike_value">{{ feels_like }}</span>°
+                    Feels like:&nbsp;&nbsp;<span class="day-stats__feelslike_value">{{ feels_like }}</span>°
                 </h3>
                 <ul class="day-stats__conditions">
                     <li>
@@ -130,5 +130,14 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="{% static 'js/chartSetup.js' %}"></script>
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function (e) {
+            const city = document.getElementById('cityInput').value.trim();
+            if (!city) {
+                e.preventDefault();
+                alert("Search cannot be empty!");
+            }
+        });
+    </script>
 </body>
 </html>
