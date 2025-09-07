@@ -14,6 +14,11 @@ import os
 
 API_KEY = '292b993e9753c48bdb5efc74d4ac54e5'
 BASE_URL = "https://api.openweathermap.org/data/2.5/"
+from django.conf import settings
+def weather_view(request):
+    if request.method == 'POST':
+        
+        csv_path = os.path.join(settings.BASE_DIR, 'weather.csv')
 def get_current_weather(city):
     url = f"{BASE_URL}weather?q={city}&appid={API_KEY}&units=metric"
     response = requests.get(url)
