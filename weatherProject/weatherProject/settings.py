@@ -117,6 +117,42 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+import os
+from pathlib import Path
+import dj_database_url  # Add this import
+
+# ... (other settings)
+
+# It's recommended to get the secret key from environment variables
+SECRET_KEY = os.environ.get('SECRET_KEY', 'a-default-secret-key-for-development')
+
+# Set DEBUG to False in production
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+
+ALLOWED_HOSTS = ['your-app-name.onrender.com', '127.0.0.1', 'localhost']
+
+# ... (other settings)
+
+# Database
+DATABASES = {
+    'default': dj_database_url.config(
+        default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+    )
+}
+
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Add whitenoise to your middleware
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add this
+    # ... other middleware
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
